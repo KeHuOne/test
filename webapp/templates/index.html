@@ -17,7 +17,7 @@
             <div class="col-8">
                 <h2>Новости</h2>
                 {% for news in news_list %}
-                <h3><a href="{{  news.url }}">{{ news.title }}</a></h3>
+                <h5><a href="{{  news.url }}">{{ news.title }}</a></h5>
                 <hr />
                 {% endfor %}
             </div>
@@ -31,7 +31,7 @@
         {% endif %}
 
         {% if exchangerates %}
-            Код валюты : {{exchangerates.CharCode}}, название валюты : {{exchangerates.Name}}, номинал : {{exchangerates.Nominal}}, Курс на сегодня : {{exchangerates.Value}}, Курс вчера : {{exchangerates.Previous}}
+            {{exchangerates.CharCode}} сегодня : {{exchangerates.Value}} вчера : {{exchangerates.Previous}}
         {% else %}
             Сервис курса валют временно недоступен
         {% endif %}
