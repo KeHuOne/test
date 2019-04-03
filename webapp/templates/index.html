@@ -15,9 +15,10 @@
         <h1>Тут название сайта(например)</h1>
         <div class="row">
             <div class="col-8">
-                <h2>Новости</h2>
+                <h2>Новости сегодня</h2>
                 {% for news in news_list %}
                 <h5><a href="{{  news.url }}">{{ news.title }}</a></h5>
+                <p>{{ news.published.strftime('%d.%m.%Y') }}</p>
                 <hr />
                 {% endfor %}
             </div>

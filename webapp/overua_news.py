@@ -1,5 +1,9 @@
+from datetime import datetime
+
 import requests
 from bs4 import BeautifulSoup
+
+from webapp.model import db, News
 
 def get_html(url):
     try:
@@ -20,9 +24,13 @@ def get_overua_news():
             title = news.find('a').text
             url = news.find('a')['href']
             url = "https://www.overclockers.ua" + url
-            result_news.append({
-                "title": title,
-                "url": url
-            })
-        return result_news
-    return False
+            published = datetime.now()
+            save_news(title, url, published)
+
+def save_news(title, url, published):
+    news_exists = News.query.filter(News.url == url).count()
+    print(news_exists)
+    if not news_exists:
+        new_news = News(title=title, url=url, published=published)
+        db.session.add(new_news)
+        db.session.commit()
