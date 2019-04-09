@@ -32,6 +32,8 @@ def get_intel_1151v2():
             price = price.replace(" ", "")
 
             socket = div.find('div', class_='n-snippet-card2__content').find('ul').find('li').text
+            socket = socket.split(',')
+            socket = socket[:-1]
             
             result.append({
                 "name" : product,

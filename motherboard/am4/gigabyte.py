@@ -11,13 +11,13 @@ def get_html(url):
         print("Сетевая ошибка")
         return False
 
-def get_amd_am4():
-    html = get_html("https://market.yandex.ru/catalog--protsessory-cpu/55330/list?hid=91019&glfilter=5038955%3A14744384&onstock=1&local-offers-first=0")
+def get_gigabyte_am4():
+    html = get_html("https://market.yandex.ru/catalog--materinskie-platy/55323/list?hid=91020&glfilter=4923171%3A13361258&glfilter=7893318%3A431404&onstock=1&local-offers-first=0")
     if html:
         soup = BeautifulSoup(html, 'lxml')
-        all_amd_am4 = soup.find_all('div', class_='n-snippet-card2')
+        all_gigabyte_am4 = soup.find_all('div', class_='n-snippet-card2')
         result = []
-        for div in all_amd_am4:
+        for div in all_gigabyte_am4:
             
             product = div.find('div', class_='n-snippet-card2__title').find('a', class_='link').get('title')
             
@@ -31,9 +31,8 @@ def get_amd_am4():
             price = price.replace("\xa0₽", "")
             price = price.replace(" ", "")
 
-            socket = div.find('div', class_='n-snippet-card2__content').find('ul').find('li').text
-            socket = socket.split(',')
-            socket = socket[:-1]
+            socket = div.find('div', class_='n-snippet-card2__content').find('ul').find_all('li')
+            
             
             result.append({
                 "name" : product,
@@ -45,4 +44,4 @@ def get_amd_am4():
         return result
     return False
 
-print(get_amd_am4())
+print(get_gigabyte_am4())
