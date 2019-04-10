@@ -31,7 +31,7 @@ def get_gigabyte_am4():
             price = price.replace("\xa0₽", "")
             price = price.replace(" ", "")
 
-            socket = div.find('div', class_='n-snippet-card2__content').find('ul').find_all('li')
+            socket = div.find('div', class_='n-snippet-card2__content').find('ul').find_all('li')[1].text
             
             
             result.append({
