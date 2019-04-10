@@ -11,13 +11,13 @@ def get_html(url):
         print("Сетевая ошибка")
         return False
 
-def get_gigabyte_am4():
-    html = get_html("https://market.yandex.ru/catalog--materinskie-platy/55323/list?hid=91020&glfilter=4923171%3A13361258&glfilter=7893318%3A431404&onstock=1&local-offers-first=0")
+def get_asrock_am4():
+    html = get_html("https://market.yandex.ru/catalog--materinskie-platy/55323/list?hid=91020&glfilter=4923171%3A13361258&glfilter=7893318%3A762104&onstock=1&local-offers-first=0")
     if html:
         soup = BeautifulSoup(html, 'lxml')
-        all_gigabyte_am4 = soup.find_all('div', class_='n-snippet-card2')
+        all_asrock_am4 = soup.find_all('div', class_='n-snippet-card2')
         result = []
-        for div in all_gigabyte_am4:
+        for div in all_asrock_am4:
             
             product = div.find('div', class_='n-snippet-card2__title').find('a', class_='link').get('title')
             
@@ -47,4 +47,4 @@ def get_gigabyte_am4():
         return result
     return False
 
-print(get_gigabyte_am4())
+print(get_asrock_am4())
