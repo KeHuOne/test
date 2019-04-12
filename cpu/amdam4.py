@@ -12,16 +12,18 @@ def get_html(url):
         return False
 
 def get_amd_am4():
-    html = get_html("https://market.yandex.ru/catalog--protsessory-cpu/55330/list?hid=91019&glfilter=5038955%3A14744384&onstock=1&local-offers-first=0")
+    html = get_html("https://market.yandex.ru/catalog--protsessory-cpu/55330/list?hid=91019&glfilter=" \
+                "5038955%3A14744384&onstock=1&local-offers-first=0")
     if html:
         soup = BeautifulSoup(html, 'lxml')
         all_amd_am4 = soup.find_all('div', class_='n-snippet-card2')
         result = []
         for div in all_amd_am4:
+            beginning = div.find('div', class_='n-snippet-card2__title')
             
-            product = div.find('div', class_='n-snippet-card2__title').find('a', class_='link').get('title')
+            product = beginning.find('a', class_='link').get('title')
             
-            url = div.find('div', class_='n-snippet-card2__title').find('a', class_='link').get('href')
+            url = beginning.find('a', class_='link').get('href')
             url = 'https://market.yandex.ru' + url
             
             images = div.find('div', class_='n-snippet-card2__part').find('a', class_='n-snippet-card2__image').find('img', class_='image').get('src')
@@ -31,16 +33,15 @@ def get_amd_am4():
             price = price.replace("\xa0₽", "")
             price = price.replace(" ", "")
 
-            socket = div.find('div', class_='n-snippet-card2__content').find('ul').find('li').text
-            socket = socket.split(',')
-            socket = socket[:-1]
+            information = div.find('div', class_='n-snippet-card2__content').find('ul').find('li').text
+            
             
             result.append({
                 "name" : product,
                 "url" : url,
                 "image" : image,
                 "price" : price,
-                "socket" : socket
+                "information" : information
             })
         return result
     return False
