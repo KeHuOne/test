@@ -13,7 +13,7 @@ def get_html(url):
         return False
 
 def get_all_product():
-    html = get_html(settings.CPU_AM4)
+    html = get_html()
     if html:
         soup = BeautifulSoup(html, 'lxml')
         all_product = soup.find_all('div', class_='n-snippet-card2')
@@ -46,4 +46,4 @@ def get_all_product():
         return result
     return False
 
-print(get_all_product())
+print()
