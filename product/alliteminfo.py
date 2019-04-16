@@ -2,18 +2,16 @@ import requests
 import settings
 from bs4 import BeautifulSoup
 
-
 def get_html(url):
     try:
-       result = requests.get(url)
-       result.raise_for_status()
-       return result.text
+        result = requests.get(url)
+        result.raise_for_status()
+        return result.text
     except(requests.RequestException, ValueError):
         print("Сетевая ошибка")
         return False
 
-def get_all_product():
-    html = get_html(settings.CPU_AM4)
+def get_videocards_solo(html):
     if html:
         soup = BeautifulSoup(html, 'lxml')
         all_product = soup.find_all('div', class_='n-snippet-card2')
@@ -42,7 +40,16 @@ def get_all_product():
                 "price" : price,
                 "information" : information
             })
-        return result
-    return False
+        
+    
+    
 
-print(get_all_product())
+        with open('C:\\Users\\User\\projects\\Diplomlomlom(test)\\product\\allinfo.txt', 'w', encoding='utf8') as file:
+            for i in result:
+                i = str(i)
+                file.write(i + '\n')
+
+if __name__ == "__main__":
+    html = get_html(settings.CPU_AM4)
+    if html:
+        get_videocards_solo(html)
