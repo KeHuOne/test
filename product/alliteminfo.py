@@ -1,3 +1,4 @@
+import os
 import requests
 import settings
 from bs4 import BeautifulSoup
@@ -11,7 +12,7 @@ def get_html(url):
         print("Сетевая ошибка")
         return False
 
-def get_videocards_solo(html):
+def get_all_item_info(html):
     if html:
         soup = BeautifulSoup(html, 'lxml')
         all_product = soup.find_all('div', class_='n-snippet-card2')
@@ -31,8 +32,8 @@ def get_videocards_solo(html):
             price = price.replace("\xa0₽", "")
             price = price.replace(" ", "")
 
-            information = div.find('div', class_='n-snippet-card2__content').find('ul').find('li').text
-            
+            information = div.find('div', class_='n-snippet-card2__content').find('ul').find_all('li')
+           
             result.append({
                 "name" : product,
                 "url" : url,
@@ -44,12 +45,13 @@ def get_videocards_solo(html):
     
     
 
-        with open('C:\\Users\\User\\projects\\Diplomlomlom(test)\\product\\allinfo.txt', 'w', encoding='utf8') as file:
+        with open (os.path.abspath('.\\allinfo.txt'), 'w', encoding='utf8') as file:
             for i in result:
                 i = str(i)
                 file.write(i + '\n')
 
 if __name__ == "__main__":
-    html = get_html(settings.CPU_AM4)
+    for url in settings.ALL_URL:
+        html = get_html(url)
     if html:
-        get_videocards_solo(html)
+        get_all_item_info(html)
