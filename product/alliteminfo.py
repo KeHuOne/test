@@ -32,7 +32,7 @@ def get_all_item_info(html):
             price = price.replace("\xa0₽", "")
             price = price.replace(" ", "")
 
-            information = div.find('div', class_='n-snippet-card2__content').find('ul').find_all('li')
+            information = div.find('div', class_='n-snippet-card2__content').find('ul').find('li').text
            
             result.append({
                 "name" : product,
@@ -41,17 +41,15 @@ def get_all_item_info(html):
                 "price" : price,
                 "information" : information
             })
-        
-    
-    
 
         with open (os.path.abspath('.\\allinfo.txt'), 'w', encoding='utf8') as file:
             for i in result:
                 i = str(i)
                 file.write(i + '\n')
-
+        return
 if __name__ == "__main__":
-    for url in settings.ALL_URL:
+    for url in settings.url_list:
         html = get_html(url)
-    if html:
-        get_all_item_info(html)
+    
+    get_all_item_info(html)
+    
