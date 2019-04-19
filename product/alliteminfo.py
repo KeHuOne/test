@@ -42,14 +42,13 @@ def get_all_item_info(html):
                 "information" : information
             })
 
-        with open (os.path.abspath('.\\allinfo.txt'), 'w', encoding='utf8') as file:
+        with open (os.path.abspath('.\\allinfo.txt'), 'a', encoding='utf8') as file:
             for i in result:
                 i = str(i)
                 file.write(i + '\n')
-        return
+        
 if __name__ == "__main__":
     for url in settings.url_list:
         html = get_html(url)
-    
-    get_all_item_info(html)
+        get_all_item_info(html)
     
